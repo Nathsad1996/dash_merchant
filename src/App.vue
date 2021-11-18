@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer color="#222D32" v-model="drawer" app>
+    <v-navigation-drawer v-show="show" color="#222D32" v-model="drawer" app>
       <v-img src="./assets/FreshPay logo_revised (1).png"></v-img>
       <v-list>
         <v-list-item link to="/" class="white--text">
@@ -9,12 +9,23 @@
           </v-list-item-icon>
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
-        <v-list-item link to="/report" class="white--text">
-          <v-list-item-icon>
-            <v-icon>mdi-chart-box</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Business Reports</v-list-item-title>
-        </v-list-item>
+        <v-list-group :value="true" prepend-icon="mdi-chart-box">
+          <template v-slot:activator>
+            <v-list-item-title class="white--text">Reports</v-list-item-title>
+          </template>
+          <v-list-item to="/report" link class="white--text">
+            <v-list-item-icon>
+              <v-icon>mdi-swap-horizontal</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Transferts</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/balance" link class="white--text">
+            <v-list-item-icon>
+              <v-icon>mdi-bank</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Balance</v-list-item-title>
+          </v-list-item>
+        </v-list-group>
         <v-list-item link to="/history" class="white--text">
           <v-list-item-icon>
             <v-icon>mdi-history</v-icon>
@@ -24,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="#643416" class="white--text" dense app>
+    <v-app-bar v-show="show" color="#643416" class="white--text" dense app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Merchant Portal</v-toolbar-title>
@@ -56,7 +67,8 @@
 <script>
 export default {
   data: () => ({
-    drawer: null,
+    drawer: false,
+    show: false
   }),
 }
 </script>

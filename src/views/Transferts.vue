@@ -1,14 +1,35 @@
 <template>
     <v-container fluid>
-        <v-row class="mx-auto">
-            <v-col cols="1" class="float-left">
-                <v-icon color="blue" size="50" @click="goBack">mdi-arrow-left-circle</v-icon>
-            </v-col>
-            <v-col cols="9" class="mt-2 text-h5 text-center">
-                <strong>Details des transactions</strong>
-            </v-col>
-            <v-col class="mt-2 float-right">
-                <v-btn outlined rounded color="green">Export CSV</v-btn>
+        <v-row class="mx-auto mt-5">
+            <v-col class="d-flex justify-end">
+                <v-dialog v-model="dialog">
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn rounded v-bind="attrs" v-on="on" color="blue">New Transfert</v-btn>
+                        <v-btn rounded outlined color="green" class="ml-5">Export Csv</v-btn>
+                    </template>
+
+                    <v-card width="400">
+                        <v-card-title style="background-color: #643416;" class="text-h5 d-flex justify-center white--text">New Transfert Details</v-card-title>
+
+                        <v-card-text class="mt-5">
+                            <v-form>
+                                <v-select placeholder="Channel" solo dense :items="channels"></v-select>
+                                <v-select placeholder="From" solo dense :items="from_ops">From</v-select>
+                                <v-select placeholder="To" solo dense :items="to_ops">To</v-select>
+                                <v-select :items="currencies" solo dense placeholder="Currency"></v-select>
+                                <v-text-field solo dense type="number" placeholder="Amount"></v-text-field>
+                            </v-form>
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                            <v-btn color="primary" text @click="dialog = false">Close</v-btn>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" text @click="dialog = false">Send Request</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
             </v-col>
         </v-row>
         <v-row class="mx-auto">
@@ -27,6 +48,7 @@
 <script>
 export default {
     data: () => ({
+        dialog: false,
         headers: [
             {
                 text: 'Merchant ID',
@@ -122,12 +144,11 @@ export default {
                 iron: '6%',
             },
         ],
-    }),
-    methods: {
-        goBack() {
-            this.$router.go(-1)
-        }
-    }
+        channels: ["Wallet To Bank", "Wallet To Wallet", "Wallet To Cash", "Bank To Wallet"],
+        from_ops: [],
+        to_ops: [],
+        currencies: ["USD", "CDF"]
+    })
 }
 </script>
 
