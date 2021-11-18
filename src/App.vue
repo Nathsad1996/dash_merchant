@@ -1,9 +1,9 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-show="show" color="#222D32" v-model="drawer" app>
+    <v-navigation-drawer v-show="login" color="#222D32" v-model="drawer" app>
       <v-img src="./assets/FreshPay logo_revised (1).png"></v-img>
       <v-list>
-        <v-list-item link to="/" class="white--text">
+        <v-list-item link to="/home" class="white--text">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -35,7 +35,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar v-show="show" color="#643416" class="white--text" dense app>
+    <v-app-bar v-show="login" color="#643416" class="white--text" dense app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-toolbar-title>Merchant Portal</v-toolbar-title>
@@ -65,10 +65,14 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+
 export default {
   data: () => ({
     drawer: false,
-    show: false
   }),
+  computed:{
+    ...mapGetters(["login"])
+  }
 }
 </script>

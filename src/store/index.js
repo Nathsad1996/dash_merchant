@@ -24,16 +24,20 @@ const state = {
 
 
 const mutations = {
-
+  SET_LOGIN(state, value){
+    state.isLogin = value
+  }
 }
 
 
 const actions = {
-
+  setLoginAction({commit}, value){
+    commit('SET_LOGIN', value)
+  }
 }
 
 const getters = {
-
+    login: state => state.isLogin
 }
 
 export default new Vuex.Store({

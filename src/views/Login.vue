@@ -13,7 +13,7 @@
                         </v-form>
                     </v-card-text>
                     <v-card-actions class="pb-5">
-                        <v-btn rounded large block color="blue">
+                        <v-btn rounded large block color="blue" @click="login">
                             <v-icon>mdi-login</v-icon>Login
                         </v-btn>
                     </v-card-actions>
@@ -24,11 +24,20 @@
 </template>
 
 <script>
+import { mapActions } from "vuex"
+
 export default {
     data: () => ({
         show: false,
         password: ""
-    })
+    }),
+    methods: {
+        ...mapActions(["setLoginAction"]),
+        login(){
+            this.setLoginAction(true)
+            this.$router.push('/home')
+        }
+    }
 }
 </script>
 
