@@ -1,7 +1,17 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-show="login" color="#222D32" v-model="drawer" app>
-      <v-img src="./assets/FreshPay logo_revised (1).png"></v-img>
+      <v-list>
+        <v-list-item>
+          <v-list-item-title>
+            <strong class="text-h5 font-weight-bold white--text">
+              <div class="d-inline" style="color: #F04E23;">FRESH</div>
+              <div class="d-inline" style="color:#643416;">PAY</div>CONGO
+            </strong>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+      <v-divider></v-divider>
       <v-list>
         <v-list-item link to="/home" class="white--text">
           <v-list-item-icon>
@@ -44,11 +54,11 @@
         <template v-slot:activator="{ on, attrs }">
           <div>
             <v-icon color="white" size="35" v-bind="attrs" v-on="on">mdi-account-circle</v-icon>&nbsp;
-            <strong>1XBET</strong>
+            <strong class="text-button">{{merchant_name}}</strong>
           </div>
         </template>
         <v-list>
-          <v-list-item link>
+          <v-list-item link @click="logout">
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
@@ -65,13 +75,23 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
+import { mapActions, mapGetters, mapState } from "vuex"
 
 export default {
   data: () => ({
     drawer: false,
   }),
-  computed:{
+  methods: {
+    ...mapActions(["setLoginAction"]),
+    logout() {
+      window.sessionStorage.clear()
+      this.setLoginAction(false)
+      window.location.reload()
+      this.$router.push("/")
+    }
+  },
+  computed: {
+    ...mapState(["merchant_name"]),
     ...mapGetters(["login"])
   }
 }

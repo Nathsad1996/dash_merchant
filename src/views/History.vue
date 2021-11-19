@@ -11,14 +11,14 @@
                   ref="menu"
                   v-model="menu"
                   :close-on-content-click="false"
-                  :return-value.sync="date"
+                  :return-value.sync="dates"
                   transition="scale-transition"
                   offset-y
                   min-width="auto"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                      v-model="date"
+                      v-model="dates"
                       label="Choose a date range or a date"
                       prepend-icon="mdi-calendar"
                       readonly
@@ -29,15 +29,15 @@
                       dense
                     ></v-text-field>
                   </template>
-                  <v-date-picker multiple v-model="date" no-title scrollable>
+                  <v-date-picker multiple v-model="dates" no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                    <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(dates)">OK</v-btn>
                   </v-date-picker>
                 </v-menu>
               </v-col>
               <v-col>
-                <v-btn outlined rounded color="blue">Search</v-btn> &nbsp;
+                <v-btn outlined rounded color="blue" @click="search">Search</v-btn>&nbsp;
                 <v-btn outlined rounded color="green">Export CSV</v-btn>
               </v-col>
             </v-row>
@@ -54,9 +54,12 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import services from '../services/services'
+
 export default {
   data: () => ({
-    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    dates: "",
     menu: false,
     headers: [
       {
@@ -153,7 +156,28 @@ export default {
         iron: '6%',
       },
     ],
-  })
+  }),
+  methods: {
+    async search() {
+      let data = ""
+      if (Array.isArray(this.dates)) {
+        if (this.dates.length == 2) {
+          data += `${this.dates[0]},${this.dates[1]},${this.merchant_code}`
+        }
+        else {
+          data += `${this.dates[0]},${this.dates[0]},${this.merchant_code}`
+        }
+      }
+      else {
+        data += `${this.dates},${this.merchant_code}`
+      }
+      let resp = await services.search_transactions(data)
+      console.log(resp);
+    }
+  },
+  computed: {
+    ...mapState(['merchant_code'])
+  }
 }
 </script>
 
