@@ -1,12 +1,12 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-show="login" color="#222D32" v-model="drawer" app>
+    <v-navigation-drawer width="300" v-show="login" color="#222D32" v-model="drawer" app>
       <v-list>
         <v-list-item>
           <v-list-item-title>
             <strong class="text-h5 font-weight-bold white--text">
               <div class="d-inline" style="color: #F04E23;">FRESH</div>
-              <div class="d-inline" style="color:#643416;">PAY</div>CONGO
+              <div class="d-inline" style="color:#643416;">PAY</div> &nbsp;CONGO
             </strong>
           </v-list-item-title>
         </v-list-item>
@@ -21,7 +21,7 @@
         </v-list-item>
         <v-list-group :value="true" prepend-icon="mdi-chart-box">
           <template v-slot:activator>
-            <v-list-item-title class="white--text">Reports</v-list-item-title>
+            <v-list-item-title class="white--text">Business Reports</v-list-item-title>
           </template>
           <v-list-item to="/report" link class="white--text">
             <v-list-item-icon>

@@ -41,8 +41,16 @@
                                 </v-menu>
                             </v-col>
                             <v-col>
-                                <v-btn outlined rounded color="blue">Search</v-btn>&nbsp;
-                                <v-btn outlined rounded color="green">Export CSV</v-btn>
+                                <v-btn
+                                    outlined
+                                    rounded
+                                    color="blue"
+                                    :loading="loading"
+                                    @click="search"
+                                >Search</v-btn>&nbsp;
+                                <v-btn outlined rounded color="green">
+                                    <download-csv :data="balances"></download-csv>
+                                </v-btn>
                             </v-col>
                         </v-row>
                     </v-card-text>
@@ -50,28 +58,115 @@
             </v-col>
         </v-row>
         <v-row class="mx-auto">
-            <BalanceCard v-for="(balance, index) in balances" :key="index" :usd_amount="balance.usd_amount" :cdf_amount="balance.cdf_amount" :icon="balance.icon" :title="balance.title" :color="balance.color"></BalanceCard>
+            <BalanceCard
+                v-for="(balance, index) in balances"
+                :key="index"
+                :usd_amount="balance.usd_amount"
+                :cdf_amount="balance.cdf_amount"
+                :icon="balance.icon"
+                :title="balance.title"
+                :color="balance.color"
+            ></BalanceCard>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-snackbar color="info" v-model="snackbar" max-height="500" top>
+                    {{ text }}
+                    <template v-slot:action="{ attrs }">
+                        <v-btn text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+                    </template>
+                </v-snackbar>
+            </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import BalanceCard from "../components/BalanceCard.vue"
+import services from '../services/services'
 
 export default {
     data: () => ({
         date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
         menu: false,
+        loading: false,
         balances: [{
-            cdf_amount: "16 278", usd_amount: "8 798", title: "Airtel Balance", color: "#DD4B39", icon: "mdi-cash-100"
+            cdf_amount: 0, usd_amount: 0, title: "Vodacom Balance", color: "#DD4B39"
         }, {
-            cdf_amount: "16 278", usd_amount: "8 798", title: "Vodacom Balance", color: "#00A65A", icon: "mdi-cash-100"
+            cdf_amount: 0, usd_amount: 0, title: "Orange Balance", color: "#00A65A"
         }, {
-            cdf_amount: "16 278", usd_amount: "8 798", title: "Orange Balance", color: "#FF851B", icon: "mdi-cash-100"
-        }, 
-        ]
+            cdf_amount: 0, usd_amount: 0, title: "Airtel Balance", color: "#FF851B"
+        },
+        ],
+        snackbar: false,
+        text: "No Balance Founded"
     }),
-    components: { BalanceCard }
+    methods: {
+        ...mapActions(["setMerchantBalanceAction"]),
+        async search() {
+            let today = new Date().toISOString().split('T')[0]
+
+            if (this.date === today) {
+                this.loading = true
+                await this.setMerchantBalanceAction()
+
+                this.balances[0].cdf_amount = this.merchant_balance[1]
+                this.balances[0].usd_amount = this.merchant_balance[3]
+
+                this.balances[1].cdf_amount = this.merchant_balance[5]
+                this.balances[1].usd_amount = this.merchant_balance[7]
+
+                this.balances[2].cdf_amount = this.merchant_balance[9]
+                this.balances[2].usd_amount = this.merchant_balance[11]
+
+                this.loading = false;
+            }
+            else {
+                this.loading = true;
+                let data = `${this.date},${this.merchant_code}`
+                let resp = await services.balance_history(data)
+
+                if (resp.length != 0) {
+                    this.balances[0].usd_amount = parseFloat(resp[0])
+                    this.balances[0].cdf_amount = parseFloat(resp[1])
+
+                    this.balances[1].usd_amount = parseFloat(resp[4])
+                    this.balances[1].cdf_amount = parseFloat(resp[5])
+
+                    this.balances[2].usd_amount = parseFloat(resp[2])
+                    this.balances[2].cdf_amount = parseFloat(resp[3])
+                    this.loading = false;
+                }
+                else {
+                    this.balances[0].usd_amount = 0
+                    this.balances[0].cdf_amount = 0
+
+                    this.balances[1].usd_amount = 0
+                    this.balances[1].cdf_amount = 0
+
+                    this.balances[2].usd_amount = 0
+                    this.balances[2].cdf_amount = 0
+                    this.snackbar = true;
+                    this.loading = false;
+                }
+            }
+        }
+    },
+    computed: {
+        ...mapState(["merchant_balance", "merchant_code"])
+    },
+    components: { BalanceCard },
+    mounted() {
+        this.balances[0].cdf_amount = this.merchant_balance[1]
+        this.balances[0].usd_amount = this.merchant_balance[3]
+
+        this.balances[1].cdf_amount = this.merchant_balance[5]
+        this.balances[1].usd_amount = this.merchant_balance[7]
+
+        this.balances[2].cdf_amount = this.merchant_balance[9]
+        this.balances[2].usd_amount = this.merchant_balance[11]
+    }
 }
 </script>
 

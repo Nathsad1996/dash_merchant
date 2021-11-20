@@ -10,15 +10,18 @@
             width="100%"
             min-height="200"
         >
-            <v-card-title class="d-flex white--text justify-center">
-                {{ title }} transactions &nbsp;
-                <v-icon color="white" size="40">{{ icon }}</v-icon>
-            </v-card-title>
+            <v-card-title class="d-flex white--text justify-center">{{ title }} transactions &nbsp;</v-card-title>
             <v-card-text class="text-h5 white--text font-weight-bold d-flex justify-center">
-                Successful : 353 <br>
-                Failed : 25 <br>
-                Pending : 47 <br>
-                Submitted : 2 <br>
+                <v-container>
+                    <v-row
+                        dense
+                        class="mx-auto"
+                        v-for="(value, key)  in transactions_data"
+                        :key="value"
+                    >
+                        <v-col class="d-flex justify-center">{{ key }} : {{ value }}</v-col>
+                    </v-row>
+                </v-container>
             </v-card-text>
         </v-card>
     </v-col>
@@ -26,13 +29,31 @@
 
 <script>
 export default {
-    props: ["color", "title", "icon", "amount"],
+    props: ["color", "title", "transactions_data"],
     methods: {
         detail() {
-            if (this.title === "Charge") {
-                this.$router.push('/transactions-detail')
-            } else {
-                this.$router.push('/transactions-detail')
+            if (this.title === "Airtel Charge") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+            } else if (this.title === "Airtel Payout") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Vodacom Payout") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Vodacom Charge") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Orange Payout") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Orange Charge") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Payout") {
+                this.$router.push(`/transactions-detail/${this.title}`)
+
+            } else if (this.title === "Charge") {
+                this.$router.push(`/transactions-detail/${this.title}`)
             }
         }
     }

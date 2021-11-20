@@ -8,14 +8,16 @@
                 <strong>Details des transactions</strong>
             </v-col>
             <v-col class="mt-2 float-right">
-                <v-btn outlined rounded color="green">Export CSV</v-btn>
+                <v-btn outlined rounded color="green">
+                    <download-csv :data="items"></download-csv>
+                </v-btn>
             </v-col>
         </v-row>
         <v-row class="mx-auto">
             <v-col>
                 <v-data-table
                     :headers="headers"
-                    :items="desserts"
+                    :items="items"
                     :items-per-page="5"
                     class="elevation-1"
                 ></v-data-table>
@@ -25,107 +27,61 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
     data: () => ({
         headers: [
             {
                 text: 'Merchant ID',
                 align: 'start',
-                sortable: false,
-                value: 'name',
+                value: 'thirdparty_reference',
             },
-            { text: 'Amount', value: 'calories' },
-            { text: 'Type', value: 'fat' },
-            { text: 'Customer details', value: 'carbs' },
-            { text: 'Status', value: 'protein' },
-            { text: 'Created At', value: 'iron' },
+            { text: 'Action', value: 'action' },
+            { text: 'Customer Details', value: 'customer_details' },
+            { text: 'Method', value: 'method' },
+            { text: 'Amount', value: 'amount' },
+            { text: 'Currency', value: 'currency' },
+            { text: 'Status', value: 'status' },
+            { text: 'Telco Reference', value: 'telco_reference' },
+            { text: 'Created At', value: 'created_at' },
         ],
-        desserts: [
-            {
-                name: 'Frozen Yogurt',
-                calories: 159,
-                fat: 6.0,
-                carbs: 24,
-                protein: 4.0,
-                iron: '1%',
-            },
-            {
-                name: 'Ice cream sandwich',
-                calories: 237,
-                fat: 9.0,
-                carbs: 37,
-                protein: 4.3,
-                iron: '1%',
-            },
-            {
-                name: 'Eclair',
-                calories: 262,
-                fat: 16.0,
-                carbs: 23,
-                protein: 6.0,
-                iron: '7%',
-            },
-            {
-                name: 'Cupcake',
-                calories: 305,
-                fat: 3.7,
-                carbs: 67,
-                protein: 4.3,
-                iron: '8%',
-            },
-            {
-                name: 'Gingerbread',
-                calories: 356,
-                fat: 16.0,
-                carbs: 49,
-                protein: 3.9,
-                iron: '16%',
-            },
-            {
-                name: 'Jelly bean',
-                calories: 375,
-                fat: 0.0,
-                carbs: 94,
-                protein: 0.0,
-                iron: '0%',
-            },
-            {
-                name: 'Lollipop',
-                calories: 392,
-                fat: 0.2,
-                carbs: 98,
-                protein: 0,
-                iron: '2%',
-            },
-            {
-                name: 'Honeycomb',
-                calories: 408,
-                fat: 3.2,
-                carbs: 87,
-                protein: 6.5,
-                iron: '45%',
-            },
-            {
-                name: 'Donut',
-                calories: 452,
-                fat: 25.0,
-                carbs: 51,
-                protein: 4.9,
-                iron: '22%',
-            },
-            {
-                name: 'KitKat',
-                calories: 518,
-                fat: 26.0,
-                carbs: 65,
-                protein: 7,
-                iron: '6%',
-            },
-        ],
+        items: []
     }),
+    computed: {
+        ...mapState(["global_report_charge", "global_report_payout",
+            "airtel_report_charge", "airtel_report_payout",
+            "vodacom_report_charge", "vodacom_report_payout",
+            "orange_report_charge", "orange_report_payout"])
+    },
     methods: {
         goBack() {
             this.$router.go(-1)
+        }
+    },
+    mounted() {
+        let param = this.$route.params.detail
+        if (param === "Airtel Charge") {
+            this.items = this.airtel_report_charge
+        } else if (param === "Airtel Payout") {
+            this.items = this.airtel_report_payout
+
+        } else if (param === "Vodacom Payout") {
+            this.items = this.vodacom_report_payout
+
+        } else if (param === "Vodacom Charge") {
+            this.items = this.vodacom_report_charge
+
+        } else if (param === "Orange Payout") {
+            this.items = this.orange_report_payout
+
+        } else if (param === "Orange Charge") {
+            this.items = this.orange_report_charge
+
+        } else if (param === "Payout") {
+            this.items = this.global_report_payout
+
+        } else if (param === "Charge") {
+            this.items = this.global_report_charge
         }
     }
 }

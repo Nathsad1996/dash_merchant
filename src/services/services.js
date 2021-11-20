@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "../store/index"
 
-axios.defaults.baseURL = 'http://localhost:5000/'
+axios.defaults.baseURL = '/api/'
 
 export default {
     login: async(data) => {
@@ -14,7 +14,7 @@ export default {
     },
     balance: async() => {
         let resp = await axios.get(`balance/${store.state.merchant_code}`)
-        return resp.data;
+        return resp.data.balance;
     },
     vodacom_report_charge: async() => {
         let resp = await axios.get(`vodacom_report_charge/${store.state.merchant_code}`)
@@ -54,6 +54,18 @@ export default {
     },
     search_transactions: async (data) => {
         let resp = await axios.get(`transactions/${data}`)
+        return resp.data;
+    },
+    balance_history: async (data) => {
+        let resp = await axios.get(`balance_history/${data}`)
+        return resp.data;
+    },
+    add_transfert: async (data) => {
+        let resp = await axios.post('transfert', data)
+        return resp.data;
+    },
+    get_transferts: async () => {
+        let resp = await axios.get(`transferts/${store.state.merchant_code}`)
         return resp.data;
     }
 }

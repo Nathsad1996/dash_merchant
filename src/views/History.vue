@@ -37,8 +37,8 @@
                 </v-menu>
               </v-col>
               <v-col>
-                <v-btn outlined rounded color="blue" @click="search">Search</v-btn>&nbsp;
-                <v-btn outlined rounded color="green">Export CSV</v-btn>
+                <v-btn outlined rounded color="blue" @click="search" :loading="loading">Search</v-btn>&nbsp;
+                <v-btn outlined rounded color="green"><download-csv :data="items"></download-csv></v-btn>
               </v-col>
             </v-row>
           </v-card-text>
@@ -47,7 +47,13 @@
     </v-row>
     <v-row class="mx-auto mt-10">
       <v-col>
-        <v-data-table :headers="headers" :items="desserts" :items-per-page="5" class="elevation-1"></v-data-table>
+        <v-data-table
+          :loading="loading"
+          :headers="headers"
+          :items="items"
+          :items-per-page="5"
+          class="elevation-1"
+        ></v-data-table>
       </v-col>
     </v-row>
   </v-container>
@@ -65,97 +71,19 @@ export default {
       {
         text: 'Merchant ID',
         align: 'start',
-        sortable: false,
-        value: 'name',
+        value: 'thirdparty_reference',
       },
-      { text: 'Amount', value: 'calories' },
-      { text: 'Type', value: 'fat' },
-      { text: 'Customer details', value: 'carbs' },
-      { text: 'Status', value: 'protein' },
-      { text: 'Created At', value: 'iron' },
+      { text: 'Action', value: 'action' },
+      { text: 'Customer Details', value: 'customer_details' },
+      { text: 'Method', value: 'method' },
+      { text: 'Amount', value: 'amount' },
+      { text: 'Currency', value: 'currency' },
+      { text: 'Status', value: 'status' },
+      { text: 'Telco Reference', value: 'telco_reference' },
+      { text: 'Created At', value: 'created_at' },
     ],
-    desserts: [
-      {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%',
-      },
-      {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%',
-      },
-      {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%',
-      },
-      {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%',
-      },
-      {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%',
-      },
-      {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%',
-      },
-      {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%',
-      },
-      {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%',
-      },
-      {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%',
-      },
-      {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%',
-      },
-    ],
+    items: [],
+    loading: false
   }),
   methods: {
     async search() {
@@ -167,16 +95,35 @@ export default {
         else {
           data += `${this.dates[0]},${this.dates[0]},${this.merchant_code}`
         }
+        this.loading = true
+        let resp = await services.search_transactions(data)
+        this.loading = false;
+        this.items = resp;
+      }
+      else if (typeof this.dates === "string" && this.dates !== '') {
+        data += `${this.dates},${this.merchant_code}`
+        this.loading = true
+        let resp = await services.search_transactions(data)
+        this.loading = false;
+        this.items = resp;
       }
       else {
-        data += `${this.dates},${this.merchant_code}`
+        this.loading = true
+        let resp = await services.week_history()
+        this.loading = false;
+        this.items = resp;
       }
-      let resp = await services.search_transactions(data)
-      console.log(resp);
+
     }
   },
   computed: {
     ...mapState(['merchant_code'])
+  },
+  async mounted() {
+    this.loading = true
+    let data = await services.week_history()
+    this.loading = false;
+    this.items = data;
   }
 }
 </script>
