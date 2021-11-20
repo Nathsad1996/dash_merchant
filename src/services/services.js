@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "../store/index"
 
-axios.defaults.baseURL = 'http://62.171.164.224:6500/api/merchant/'
+axios.defaults.baseURL = '/api/'
 
 export default {
     login: async(data) => {
