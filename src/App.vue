@@ -2,17 +2,6 @@
   <v-app id="inspire">
     <v-navigation-drawer width="300" v-show="login" color="#222D32" v-model="drawer" app>
       <v-list>
-        <v-list-item>
-          <v-list-item-title>
-            <strong class="text-h5 font-weight-bold white--text">
-              <div class="d-inline" style="color: #F04E23;">FRESH</div>
-              <div class="d-inline" style="color:#643416;">PAY</div> &nbsp;CONGO
-            </strong>
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-      <v-divider></v-divider>
-      <v-list>
         <v-list-item link to="/home" class="white--text">
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
@@ -45,16 +34,19 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar v-show="login" color="#643416" class="white--text" dense app>
+    <v-app-bar v-show="login" color="#F04E23" class="white--text" dense app>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Merchant Portal</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        <strong>FRESHPAY CONGO Merchant Portal</strong>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <div>
             <v-icon color="white" size="35" v-bind="attrs" v-on="on">mdi-account-circle</v-icon>&nbsp;
-            <strong class="text-button">{{merchant_name}}</strong>
+            <strong class="text-button">{{ merchant_name }}</strong>
           </div>
         </template>
         <v-list>

@@ -1,27 +1,17 @@
 <template>
-    <v-col class="d-flex justify-center">
-        <v-card outlined elevation="5" :color="color" min-height="200" width="100%">
-            <v-card-title class="d-flex justify-center white--text">
-                {{ title }} &nbsp;
-            </v-card-title>
+    <v-col cols="12" class="d-flex justify-center">
+        <v-card outlined elevation="5" :color="color" height="70" width="100%">
             <v-card-text>
                 <v-row class="mx-auto ml-15">
-                    <v-col class="fill-height">
-                        <v-card flat :color="color">
-                            <v-card-title class="white--text">USD</v-card-title>
-                            <v-card-text class="text-h5 white--text">
-                                <strong>{{ Intl.NumberFormat("fr").format(usd_amount.toFixed(2))  }}</strong>
-                            </v-card-text>
-                        </v-card>
+                    <v-col class="d-flex text-h5 justify-center white--text">
+                        <strong>{{ title }}</strong> &nbsp;
                     </v-col>
-                    <v-col class="fill-height">
-                        <v-card flat :color="color">
-                            <v-card-title class="white--text text-center">CDF</v-card-title>
-                            <v-card-text class="text-h5 white--text">
-                                <strong>{{ Intl.NumberFormat("fr").format(cdf_amount.toFixed(2))  }}</strong>
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
+                    <v-col
+                        class="text-h5 white--text font-weight-bold"
+                    >{{ Intl.NumberFormat("fr").format(usd_amount.toFixed(2)) }} USD</v-col>
+                    <v-col
+                        class="text-h5 white--text font-weight-bold"
+                    >{{ Intl.NumberFormat("fr").format(cdf_amount.toFixed(2)) }} CDF</v-col>
                 </v-row>
             </v-card-text>
         </v-card>

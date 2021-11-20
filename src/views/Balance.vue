@@ -92,11 +92,11 @@ export default {
         menu: false,
         loading: false,
         balances: [{
-            cdf_amount: 0, usd_amount: 0, title: "Vodacom Balance", color: "#DD4B39"
+            cdf_amount: 0, usd_amount: 0, title: "Vodacom Balance", color: "#00A65A"
         }, {
-            cdf_amount: 0, usd_amount: 0, title: "Orange Balance", color: "#00A65A"
+            cdf_amount: 0, usd_amount: 0, title: "Orange Balance", color: "#FF851B"
         }, {
-            cdf_amount: 0, usd_amount: 0, title: "Airtel Balance", color: "#FF851B"
+            cdf_amount: 0, usd_amount: 0, title: "Airtel Balance", color: "#DD4B39"
         },
         ],
         snackbar: false,

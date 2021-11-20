@@ -85,8 +85,6 @@ const mutations = {
     state.orange_report_charge = value.orange_charge
     state.orange_report_payout = value.orange_payout
 
-    console.log(state.orange_report_payout);
-
   },
   SET_TRANSFERT(state, value){
     state.transferts = value

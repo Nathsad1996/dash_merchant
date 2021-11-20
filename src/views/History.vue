@@ -89,6 +89,7 @@ export default {
     async search() {
       let data = ""
       if (Array.isArray(this.dates)) {
+        this.dates = this.dates.filter(el => el !== '')
         if (this.dates.length == 2) {
           data += `${this.dates[0]},${this.dates[1]},${this.merchant_code}`
         }
