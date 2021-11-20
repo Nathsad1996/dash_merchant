@@ -38,7 +38,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
       <v-spacer></v-spacer>
-      <v-toolbar-title>
+      <v-toolbar-title class="d-none d-lg-flex d-md-flex d-xl-flex d-xl-none">
         <strong>FRESHPAY CONGO Merchant Portal</strong>
       </v-toolbar-title>
       <v-spacer></v-spacer>

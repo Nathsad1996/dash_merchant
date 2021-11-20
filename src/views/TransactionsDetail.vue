@@ -1,13 +1,13 @@
 <template>
     <v-container fluid>
         <v-row class="mx-auto">
-            <v-col cols="1" class="float-left">
+            <v-col cols="12" class="col-lg-1 float-left">
                 <v-icon color="blue" size="50" @click="goBack">mdi-arrow-left-circle</v-icon>
             </v-col>
-            <v-col cols="9" class="mt-2 text-h5 text-center">
+            <v-col cols="12" class="col-lg-9 mt-2 text-h5 text-center">
                 <strong>Details des transactions</strong>
             </v-col>
-            <v-col class="mt-2 float-right">
+            <v-col cols="12" class="col-lg-2 mt-2 float-lg-left d-flex justify-center">
                 <v-btn outlined rounded color="green">
                     <download-csv :data="items"></download-csv>
                 </v-btn>
@@ -60,21 +60,21 @@ export default {
     },
     mounted() {
         let param = this.$route.params.detail
-        if (param === "Airtel Charge") {
+        if (param === "Airtel charge") {
             this.items = this.airtel_report_charge
-        } else if (param === "Airtel Payout") {
+        } else if (param === "Airtel payout") {
             this.items = this.airtel_report_payout
 
-        } else if (param === "Vodacom Payout") {
+        } else if (param === "Vodacom payout") {
             this.items = this.vodacom_report_payout
 
-        } else if (param === "Vodacom Charge") {
+        } else if (param === "Vodacom charge") {
             this.items = this.vodacom_report_charge
 
-        } else if (param === "Orange Payout") {
+        } else if (param === "Orange payout") {
             this.items = this.orange_report_payout
 
-        } else if (param === "Orange Charge") {
+        } else if (param === "Orange charge") {
             this.items = this.orange_report_charge
 
         } else if (param === "Payout") {

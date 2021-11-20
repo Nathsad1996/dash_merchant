@@ -6,7 +6,7 @@
           <v-card-title>Transactions Search</v-card-title>
           <v-card-text>
             <v-row>
-              <v-col>
+              <v-col cols="12" class="col-lg-6">
                 <v-menu
                   ref="menu"
                   v-model="menu"
@@ -36,9 +36,11 @@
                   </v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col>
-                <v-btn outlined rounded color="blue" @click="search" :loading="loading">Search</v-btn>&nbsp;
-                <v-btn outlined rounded color="green"><download-csv :data="items"></download-csv></v-btn>
+              <v-col cols="12" class="col-lg-6">
+                <v-btn class="mr-5" dense outlined rounded color="blue" @click="search" :loading="loading">Search</v-btn>
+                <v-btn dense outlined rounded color="green">
+                  <download-csv :data="items"></download-csv>
+                </v-btn>
               </v-col>
             </v-row>
           </v-card-text>

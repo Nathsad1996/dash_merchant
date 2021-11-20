@@ -118,9 +118,9 @@ export default {
     },
     airtel_details: {
       transactions: [{
-        color: "#DD4B39", title: "Airtel Charge", data: {}
+        color: "#DD4B39", title: "Airtel charge", data: {}
       }, {
-        color: "#DD4B39", title: "Airtel Payout", data: {}
+        color: "#DD4B39", title: "Airtel payout", data: {}
       }],
       volume: [{
         cdf_amount: 0, usd_amount: 0, title: "Balance", color: "#DD4B39"
@@ -128,9 +128,9 @@ export default {
     },
     vodacom_details: {
       transactions: [{
-        color: "#00A65A", title: "Vodacom Charge", data: {}
+        color: "#00A65A", title: "Vodacom charge", data: {}
       }, {
-        color: "#00A65A", title: "Vodacom Payout", data: {}
+        color: "#00A65A", title: "Vodacom payout", data: {}
       }],
       volume: [{
         cdf_amount: 0, usd_amount: 0, title: "Balance", color: "#00A65A"
@@ -138,9 +138,9 @@ export default {
     },
     orange_details: {
       transactions: [{
-        color: "#FF851B", title: "Orange Charge", data: {}
+        color: "#FF851B", title: "Orange charge", data: {}
       }, {
-        color: "#FF851B", title: "Orange Payout", data: {}
+        color: "#FF851B", title: "Orange payout", data: {}
       }],
       volume: [{
         cdf_amount: 0, usd_amount: 0, title: "Balance", color: "#FF851B"
