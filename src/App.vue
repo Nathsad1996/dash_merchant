@@ -86,8 +86,8 @@ export default {
     logout() {
       window.sessionStorage.clear()
       this.setLoginAction(false)
-      window.location.reload()
       this.$router.push("/")
+      window.location.reload()
     }
   },
   computed: {
