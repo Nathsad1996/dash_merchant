@@ -4,10 +4,16 @@
             <v-col class="d-flex justify-end">
                 <v-dialog v-model="dialog">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn rounded v-bind="attrs" v-on="on" color="blue">New Transfert</v-btn>
-                        <v-btn rounded outlined color="green" class="ml-5">
-                            <download-csv :data="transferts"></download-csv>
-                        </v-btn>
+                        <v-row class="d-flex justify-lg-end">
+                            <v-col cols="12 col-lg-3">
+                                <v-btn block rounded v-bind="attrs" v-on="on" color="blue">New Transfert</v-btn>
+                            </v-col>
+                            <v-col cols="12 col-lg-3">
+                                <v-btn block rounded outlined color="green">
+                                    <download-csv :data="transferts"></download-csv>
+                                </v-btn>
+                            </v-col>
+                        </v-row>
                     </template>
 
                     <v-card width="400">
