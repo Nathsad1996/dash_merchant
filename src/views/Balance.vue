@@ -172,6 +172,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 .grow-border {
     border: 3px solid lightgray;
 }
