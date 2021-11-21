@@ -129,14 +129,14 @@ export default {
                 let resp = await services.balance_history(data)
 
                 if (resp.length != 0) {
-                    this.balances[0].usd_amount = parseFloat(resp[0])
-                    this.balances[0].cdf_amount = parseFloat(resp[1])
+                    this.balances[0].usd_amount = parseFloat(resp[0][0])
+                    this.balances[0].cdf_amount = parseFloat(resp[0][1])
 
-                    this.balances[1].usd_amount = parseFloat(resp[4])
-                    this.balances[1].cdf_amount = parseFloat(resp[5])
+                    this.balances[1].usd_amount = parseFloat(resp[0][4])
+                    this.balances[1].cdf_amount = parseFloat(resp[0][5])
 
-                    this.balances[2].usd_amount = parseFloat(resp[2])
-                    this.balances[2].cdf_amount = parseFloat(resp[3])
+                    this.balances[2].usd_amount = parseFloat(resp[0][2])
+                    this.balances[2].cdf_amount = parseFloat(resp[0][3])
                     this.loading = false;
                 }
                 else {
