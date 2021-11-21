@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import state from "../store/index"
+import store from "../store/index"
 
 Vue.use(VueRouter)
 
@@ -60,7 +60,12 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-  if (!state.getters.login && to.path !== "/") {
+  if (!store.getters.login && to.path !== "/") {
+    next('/')
+  }
+  else if(store.getters.login === true && to.path === "/" && from.path !== '/'){
+    store.state.isLogin = false
+    window.sessionStorage.clear()
     next('/')
   }
   else{

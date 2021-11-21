@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-row class="mx-auto">
       <v-col class="float-left text-h4">
-        Global Views
+        TOTAL
         <v-btn fab text :loading="loading_global" @click="reload_global">
           <v-icon size="35">mdi-refresh</v-icon>
         </v-btn>

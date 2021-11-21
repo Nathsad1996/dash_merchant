@@ -39,7 +39,7 @@
 
       <v-spacer></v-spacer>
       <v-toolbar-title class="d-none d-lg-flex d-md-flex d-xl-flex d-xl-none">
-        <strong>FRESHPAY CONGO Merchant Portal</strong>
+        <strong>Freshpay Congo Merchant Portal</strong>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -88,3 +88,9 @@ export default {
   }
 }
 </script>
+
+<style>
+  #inspire{
+    font-family: 'Avenir';
+  }
+</style>
