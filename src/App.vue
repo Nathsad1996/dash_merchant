@@ -90,7 +90,5 @@ export default {
 </script>
 
 <style>
-  #inspire{
-    font-family: 'Avenir';
-  }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 </style>
