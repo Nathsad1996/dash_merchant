@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row class="mx-auto">
-      <v-col class="float-left text-h4">
+      <v-col class="float-left text-h5">
         TOTAL
         <v-btn fab text :loading="loading_global" @click="reload_global">
           <v-icon size="35">mdi-refresh</v-icon>
@@ -18,7 +18,7 @@
       ></TransactionCard>
     </v-row>
     <v-row class="mx-auto">
-      <v-col class="float-left text-h4">
+      <v-col class="float-left text-h5">
         Airtel
         <v-btn fab text :loading="loading_airtel" @click="reload_airtel">
           <v-icon size="35">mdi-refresh</v-icon>
@@ -44,7 +44,7 @@
       ></BalanceCard>
     </v-row>
     <v-row class="mx-auto">
-      <v-col class="float-left text-h4">
+      <v-col class="float-left text-h5">
         Vodacom
         <v-btn fab text :loading="loading_vodacom" @click="reload_vodacom">
           <v-icon size="35">mdi-refresh</v-icon>
@@ -70,7 +70,7 @@
       ></BalanceCard>
     </v-row>
     <v-row class="mx-auto">
-      <v-col class="float-left text-h4">
+      <v-col class="float-left text-h5">
         Orange
         <v-btn fab text :loading="loading_orange" @click="reload_orange">
           <v-icon size="35">mdi-refresh</v-icon>
