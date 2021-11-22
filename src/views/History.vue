@@ -29,7 +29,7 @@
                       dense
                     ></v-text-field>
                   </template>
-                  <v-date-picker multiple v-model="dates" no-title scrollable>
+                  <v-date-picker :min="min" multiple v-model="dates" no-title scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                     <v-btn text color="primary" @click="$refs.menu.save(dates)">OK</v-btn>
@@ -37,7 +37,15 @@
                 </v-menu>
               </v-col>
               <v-col cols="12" class="col-lg-6">
-                <v-btn class="mr-5" dense outlined rounded color="blue" @click="search" :loading="loading">Search</v-btn>
+                <v-btn
+                  class="mr-5"
+                  dense
+                  outlined
+                  rounded
+                  color="blue"
+                  @click="search"
+                  :loading="loading"
+                >Search</v-btn>
                 <v-btn dense outlined rounded color="green">
                   <download-csv :data="items"></download-csv>
                 </v-btn>
@@ -67,6 +75,8 @@ import services from '../services/services'
 
 export default {
   data: () => ({
+    min: (new Date(new Date().getFullYear(),
+      new Date().getMonth() - 2)).toISOString().substr(0, 10),
     dates: "",
     menu: false,
     headers: [
@@ -132,7 +142,7 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 .grow-border {
   border: 3px solid lightgray;
 }
